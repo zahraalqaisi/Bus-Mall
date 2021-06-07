@@ -1,7 +1,7 @@
 `use strict`
 
 
-
+let container=document.getElementById('img-div')
 let firstImgElement=document.getElementById('firt-img');
 let secondImgElement=document.getElementById('second-img');
 let thierdImgElement=document.getElementById('thierd-img');
@@ -10,7 +10,7 @@ let maxAttempts=10;
 let userAttemptsCounter=0;
 
 
-let firtImgIndex;
+let firstImgIndex;
 let secondImgIndex;
 let thierdImgIndex;
 
@@ -19,6 +19,7 @@ function Product(name, source) {
     this.name=name;
     this.source=source;
     this.votes=0;
+    this.shown=0;
 
 
     Product.allProducts.push(this);
@@ -51,7 +52,7 @@ new Product ('wine-glass','img/wine-glass.jpg');
  console.log(Product.allProducts);
 
 function generateRandomIndex() {
-    return Math.floor(Math.random()*Product.allProducts.length );
+    return Math.floor(Math.random()* Product.allProducts.length);
 }
 
 
@@ -60,18 +61,19 @@ function generateRandomIndex() {
  console.log(generateRandomIndex());
 
 function renderThreeImg() {
-    firtImgIndex=generateRandomIndex();
+    firstImgIndex=generateRandomIndex();
     secondImgIndex=generateRandomIndex();
     thierdImgIndex=generateRandomIndex();
 
 
     while ( firstImgIndex!=secondImgIndex  &&  firstImgIndex!=thierdImgIndex && secondImgIndex!=thierdImgIndex); {
+        firstImgElement=generateRandomIndex();
         secondImgIndex=generateRandomIndex();
         thierdImgIndex=generateRandomIndex();
 
     }
 
-firstImgElement.src=Product.allProducts[firtImgIndex].source;
+firstImgElement.src=Product.allProducts[firstImgIndex].source;
 secondImgElement.srcc=Product.allProducts[secondImgIndex].source;
 thierdImgElement.srcc=Product.allProducts[thierdImgIndex].source;
 
@@ -94,16 +96,16 @@ function handleUserClick(event) {
 
     if (userAttemptsCounter<=maxAttempts){
 
-        if (event.target.id==='firstImgIndex'){
+        if (event.target.id==='firt-img'){
             Product.allProducts[firtImgIndex].votes++;
 
-        }else{
+        }else if(event.target.id==='second-img'){
             Product.allProducts[secondImgIndex].votes++;
-        }else {
+        }else  if(event.target.id==='thierd-img'){
             Product.allProducts[thierdImgIndex].votes++;
         }
     }else {
-        let list=document,getElementById('result-list');
+        let list=document.getElementById('result-list');
         for (let i = 0; i < Product.allProducts.length; i++) {
             
             let ProductResult=document.createElement('li');
