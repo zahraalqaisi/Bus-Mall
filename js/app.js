@@ -1,6 +1,6 @@
 `use strict`
 
-
+let array=[];
 let container=document.getElementById('img-div')
 let firstImgElement=document.getElementById('firt-img');
 let secondImgElement=document.getElementById('second-img');
@@ -41,15 +41,15 @@ new Product ('pen','img/pen.jpg');
 new Product ('pet-sweep','img/pet-sweep.jpg');
 new Product ('scissors','img/scissors.jpg');
 new Product ('shark','img/shark.jpg');
-new Product ('sweep','img/sweep.jpg');
+new Product ('sweep','img/sweep.png');
 new Product ('tauntaun','img/tauntaun.jpg');
 new Product ('unicorn','img/unicorn.jpg');
-new Product ('usb','img/usb.jpg');
+new Product ('usb','img/usb.gif');
 new Product ('water-can','img/water-can.jpg');
 new Product ('wine-glass','img/wine-glass.jpg');
 
 
- console.log(Product.allProducts);
+//  console.log(Product.allProducts);
 
 function generateRandomIndex() {
     return Math.floor(Math.random()* Product.allProducts.length);
@@ -66,30 +66,39 @@ function renderThreeImg() {
     thierdImgIndex=generateRandomIndex();
 
 
-    while ( firstImgIndex!=secondImgIndex  &&  firstImgIndex!=thierdImgIndex && secondImgIndex!=thierdImgIndex); {
-        firstImgElement=generateRandomIndex();
+    while ( firstImgIndex===secondImgIndex||firstImgIndex===thierdImgIndex||thierdImgIndex===secondImgElement )
+     {
+       
         secondImgIndex=generateRandomIndex();
         thierdImgIndex=generateRandomIndex();
+
 
     }
 
 firstImgElement.src=Product.allProducts[firstImgIndex].source;
-secondImgElement.srcc=Product.allProducts[secondImgIndex].source;
-thierdImgElement.srcc=Product.allProducts[thierdImgIndex].source;
+Product.allProducts[firstImgIndex].shown++;
+
+secondImgElement.src=Product.allProducts[secondImgIndex].source;
+Product.allProducts[secondImgIndex].shown++;
+
+thierdImgElement.src=Product.allProducts[thierdImgIndex].source;
+Product.allProducts[thierdImgIndex].shown++;
+
 
 }
+console.log(Product.allProducts);
 renderThreeImg();
 
 // addind event lisner
+container.addEventListener('click',handleUserClick) ;
+// firstImgElement.addEventListener('click',handleUserClick);
 
-firstImgElement.addEventListener('click',handleUserClick);
+// secondImgElement.addEventListener('click',handleUserClick);
 
-secondImgElement.addEventListener('click',handleUserClick);
-
-thierdImgElement.addEventListener('click',handleUserClick);
+// thierdImgElement.addEventListener('click',handleUserClick);
 
 function handleUserClick(event) {
-    console.log(event.target.id);
+    // console.log(event.target.id);
 
     userAttemptsCounter++;
     // console.log(userAttemptsCounter);
@@ -97,27 +106,44 @@ function handleUserClick(event) {
     if (userAttemptsCounter<=maxAttempts){
 
         if (event.target.id==='firt-img'){
-            Product.allProducts[firtImgIndex].votes++;
+            Product.allProducts[firstImgIndex].votes++;
 
         }else if(event.target.id==='second-img'){
             Product.allProducts[secondImgIndex].votes++;
         }else  if(event.target.id==='thierd-img'){
             Product.allProducts[thierdImgIndex].votes++;
+        }else {
+            alert('please click on the imges');
+            userAttemptsCounter--;
         }
+        renderThreeImg();
     }else {
-        let list=document.getElementById('result-list');
+        let button=document.getElementById('button');
+        button.hidden=false;
+        button.addEventListener('click', showinglist);
+
+
+       
+
+        // firstImgElement.removeEventListener('click',handleUserClick);
+        // secondImgElement.removeEventListener('click',handleUserClick);
+        // thierdImgElement.removeEventListener('click',handleUserClick);
+        container.removeEventListener('click',handleUserClick);
+    }
+}
+
+function showinglist() {
+     let list=document.getElementById('result-list');
         for (let i = 0; i < Product.allProducts.length; i++) {
             
             let ProductResult=document.createElement('li');
             list.append(ProductResult);
 
-            ProductResult.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes`
+            ProductResult.textContent=`${Product.allProducts[i].name} has ${Product.allProducts[i].votes} votes,  ${Product.allProducts[i].shown}`
         }
+        // button.removeEventListener('click',showinglist);
+        button.hidden=true;
 
-        firstImgElement.removeEventListener('click',handleUserClick);
-        secondImgElement.removeEventListener('click',handleUserClick);
-        thierdImgElement.removeEventListener('click',handleUserClick);
-    }
 }
 
 
