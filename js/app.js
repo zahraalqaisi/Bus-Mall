@@ -28,9 +28,21 @@ function Product(name, source) {
     Product.allProducts.push(this);
     productNames.push(this.name);
 
+    
+
 }
 
 Product.allProducts=[];
+
+function updateStorage() {
+    let arrayString=JSON.stringify(Product.allProducts);
+    console.log(arrayString);
+    localStorage.setItem('product',arrayString);
+}
+
+
+
+
 
 new Product ('bag','img/bag.jpg');
 new Product ('banana','img/banana.jpg');
@@ -56,6 +68,32 @@ new Product ('wine-glass','img/wine-glass.jpg');
 console.log(productNames);
 
 //  console.log(Product.allProducts);
+
+
+// gitting the data from the local storage 
+function getProductOrder() {
+    let data=localStorage.getItem('Product');
+    // console.log(data);
+    // convert them back to a normal array of object
+    let productData=JSON.parse(data);
+    // console.log(productData);
+    // set Product.AllProducts array equal to productData
+    if (productData!==null) {
+       Product.allProducts=productData;  
+    }
+   
+
+    renderThreeImg();
+
+
+}
+
+
+
+
+
+
+
 
 function generateRandomIndex() {
     return Math.floor(Math.random()* Product.allProducts.length);
@@ -157,6 +195,7 @@ function handleUserClick(event) {
             shown.push( Product.allProducts[i].shown);
             
         }
+        updateStorage();
 
         chart();
     }
@@ -236,3 +275,5 @@ let myChart = new Chart(ctx, {
     }
 });
 }
+getProductOrder();
+console.log(Product.allProducts);
