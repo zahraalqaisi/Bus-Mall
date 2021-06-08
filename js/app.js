@@ -66,20 +66,32 @@ function generateRandomIndex() {
 
  console.log(generateRandomIndex());
 
+ let shownPictures=[];
+
 function renderThreeImg() {
     firstImgIndex=generateRandomIndex();
     secondImgIndex=generateRandomIndex();
     thierdImgIndex=generateRandomIndex();
 
 
-    while ( firstImgIndex===secondImgIndex||firstImgIndex===thierdImgIndex||thierdImgIndex===secondImgElement )
+
+    console.log('before',shownPictures);
+    while ( firstImgIndex===secondImgIndex||firstImgIndex===thierdImgIndex||thierdImgIndex===secondImgElement ||
+        shownPictures.includes(firstImgIndex)||shownPictures.includes(secondImgIndex)||shownPictures.includes(thierdImgIndex))
      {
        
+        firstImgIndex=generateRandomIndex();
         secondImgIndex=generateRandomIndex();
         thierdImgIndex=generateRandomIndex();
 
 
     }
+
+    shownPictures=[firstImgIndex, secondImgIndex,thierdImgIndex ];
+    console.log('after',shownPictures);
+
+
+
 
 firstImgElement.src=Product.allProducts[firstImgIndex].source;
 Product.allProducts[firstImgIndex].shown++;
