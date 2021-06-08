@@ -66,12 +66,16 @@ function generateRandomIndex() {
 
  console.log(generateRandomIndex());
 
+ 
+
  let shownPictures=[];
 
 function renderThreeImg() {
     firstImgIndex=generateRandomIndex();
     secondImgIndex=generateRandomIndex();
     thierdImgIndex=generateRandomIndex();
+
+    
 
 
 
@@ -171,7 +175,7 @@ function showinglist() {
         button.hidden=true;
 
 }
-
+//chart
 
 function chart(){
 let ctx = document.getElementById('myChart');
